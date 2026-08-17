@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quantagen International | Global Desk V2</title>
+<style>
+:root{--bg:#030507;--gold:#d4af37;--gold2:#f2d779;--text:#f5f7f9;--muted:#8e97a3;--green:#39d98a;--line:rgba(212,175,55,.28)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:"Segoe UI",Arial,sans-serif}
+body{display:flex;flex-direction:column}
+.main{display:flex;height:calc(100vh - 46px);min-height:0}
+.left{width:clamp(410px,27vw,500px);min-width:390px;padding:12px;display:flex;flex-direction:column;gap:10px;background:radial-gradient(circle at 0 0,#151c26,#070a0f 45%,#030507);border-right:1px solid rgba(212,175,55,.58)}
+.brand,.footer{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,rgba(212,175,55,.06),rgba(255,255,255,.01));text-align:center}
+.brand{min-height:60px;display:flex;align-items:center;justify-content:center}
+.brand b{font:22px Georgia,serif;letter-spacing:5px;color:var(--gold2)}.brand small{display:block;font-size:10px;letter-spacing:6px;color:#d9c788;margin-top:6px}
+.footer{min-height:52px;display:flex;align-items:center;justify-content:center}.footer small{font-size:10px;letter-spacing:1.5px;color:var(--muted)}.footer b{display:block;color:var(--gold2);font-size:14px;letter-spacing:2px;margin-top:3px}
+.clocks{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px}
+.clock-card{position:relative;min-height:0;border:1px solid rgba(212,175,55,.25);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.008));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7px;transition:.6s;overflow:hidden}
+.clock-card.active{border-color:rgba(212,175,55,.92);box-shadow:0 0 26px rgba(212,175,55,.16),inset 0 0 25px rgba(212,175,55,.06)}
+.clock-card.sweep{animation:sweep 2.2s ease}@keyframes sweep{50%{box-shadow:0 0 42px rgba(212,175,55,.5)}}
+.card-top{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-bottom:3px}.dot{width:6px;height:6px;border-radius:50%;background:#68717d}.active .dot{background:var(--green);box-shadow:0 0 9px var(--green);animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35}}
+.city{font-size:13px;letter-spacing:1.5px;font-weight:800;color:var(--gold2)}.state{font-size:10px;font-weight:800;color:#747d88}.state.open{color:var(--green)}
+.dial-wrap{position:relative;width:132px;height:132px;margin:0 0 3px}.progress-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}.track{fill:none;stroke:#1b222d;stroke-width:2}.progress{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:301.6;stroke-dashoffset:301.6;filter:drop-shadow(0 0 4px rgba(212,175,55,.6));transition:stroke-dashoffset 1s linear}
+.dial{position:absolute;inset:7px;border-radius:50%;border:1px solid #2a333e;background:radial-gradient(circle at 50% 42%,#121820,#04070a 72%);box-shadow:inset 0 0 22px rgba(212,175,55,.055),0 7px 20px rgba(0,0,0,.5)}
+.marker{position:absolute;left:50%;top:50%;width:1px;height:44%;transform-origin:50% 0}.marker:after{content:"";display:block;width:1px;height:3px;background:#56606c}.marker.major:after{height:5px;background:#9b8540}
+.num{position:absolute;width:20px;height:20px;line-height:20px;text-align:center;font:700 11px Georgia,serif;color:#d9c676;transform:translate(-50%,-50%);z-index:2;text-shadow:0 0 5px rgba(212,175,55,.2)}
+.hand{position:absolute;left:50%;bottom:50%;transform-origin:50% 100%;border-radius:6px;z-index:5;will-change:transform;backface-visibility:hidden;transform-style:preserve-3d}.hour{width:3px;height:24px;margin-left:-1.5px;background:#f7f7f7;box-shadow:0 0 1px rgba(255,255,255,.35)}.minute{width:2px;height:33px;margin-left:-1px;background:#c9ced5;box-shadow:0 0 1px rgba(255,255,255,.22)}.second{width:1px;height:39px;margin-left:-.5px;background:var(--gold2);box-shadow:0 0 2px rgba(212,175,55,.55);z-index:7}
+.pin{position:absolute;left:50%;top:50%;width:7px;height:7px;transform:translate(-50%,-50%);border-radius:50%;background:var(--gold2);box-shadow:0 0 7px var(--gold);z-index:8}
+.clock-logo{position:absolute;left:50%;top:67%;transform:translate(-50%,-50%);width:25px;height:25px;object-fit:contain;opacity:.72;filter:drop-shadow(0 0 3px rgba(212,175,55,.2));z-index:1}
+.digital{font-size:21px;font-weight:700;color:#fff;text-shadow:0 0 7px rgba(255,255,255,.18);white-space:nowrap}.ampm{font-size:12px;color:var(--gold2);margin-left:2px}.date{font-size:12px;color:#c7cdd5;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-top:1px}.count{height:17px;margin-top:2px;font-size:10.5px;color:#aab2bd;letter-spacing:.55px;text-transform:uppercase;white-space:nowrap}.active .count{color:#d8c47c}
+.media{flex:1;position:relative;overflow:hidden;background:#000;min-width:0;display:flex;align-items:center;justify-content:center}.layer{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;object-position:center center;opacity:0;transition:opacity 1.5s ease}.layer.show{opacity:1}img.layer.show{transform:none}
+.status{position:absolute;top:18px;right:18px;z-index:20;padding:8px 14px;border:1px solid rgba(212,175,55,.4);border-radius:24px;background:rgba(0,0,0,.7);font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--gold2);display:flex;gap:7px;align-items:center}.live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}.desk-control{cursor:pointer;user-select:none}.chev{font-size:9px}.desk-menu{display:none;position:absolute;right:0;top:42px;min-width:185px;padding:6px;border:1px solid rgba(212,175,55,.4);border-radius:12px;background:rgba(2,3,5,.96);box-shadow:0 12px 30px #000}.desk-menu.show{display:block}.desk-menu button{display:block;width:100%;border:0;background:transparent;color:#d8dde3;text-align:left;padding:10px 12px;border-radius:8px;font-size:10px;letter-spacing:1px;cursor:pointer}.desk-menu button:hover,.desk-menu button.selected{background:rgba(212,175,55,.13);color:var(--gold2)}
+.media-menu{position:absolute;top:18px;left:18px;z-index:25}.media-button{border:1px solid rgba(212,175,55,.45);background:rgba(0,0,0,.72);color:var(--gold2);border-radius:22px;padding:8px 14px;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer}.menu{display:none;margin-top:7px;padding:6px;border:1px solid rgba(212,175,55,.35);border-radius:12px;background:rgba(2,3,5,.94);box-shadow:0 10px 30px #000}.menu.show{display:block}.menu button{display:block;width:100%;border:0;background:transparent;color:#d8dde3;text-align:left;padding:9px 13px;border-radius:8px;font-size:10px;letter-spacing:1px;cursor:pointer}.menu button:hover,.menu button.selected{background:rgba(212,175,55,.12);color:var(--gold2)}
+.overlap{position:absolute;left:50%;top:18px;transform:translateX(-50%) translateY(-10px);z-index:20;padding:7px 15px;border:1px solid rgba(212,175,55,.5);border-radius:20px;background:rgba(0,0,0,.72);color:var(--gold2);font-size:9px;letter-spacing:1.3px;font-weight:800;opacity:0;transition:.5s}.overlap.show{opacity:1;transform:translateX(-50%)}
+.full{position:absolute;right:18px;bottom:18px;z-index:20;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.68);color:#fff;border-radius:9px;padding:7px 10px;cursor:pointer}
+.alert{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:.5s}.alert.show{opacity:1}.alertbox{text-align:center;padding:18px 32px;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);background:rgba(0,0,0,.75)}.alertbox b{font:24px Georgia,serif;color:var(--gold2);letter-spacing:4px}.alertbox span{display:block;font-size:9px;letter-spacing:3px;margin-top:6px}
+.ticker{height:46px;flex-shrink:0;background:#010204;border-top:1px solid #252c35;overflow:hidden;display:flex;align-items:center;white-space:nowrap}.track2{display:flex;width:max-content;animation:scroll 38s linear infinite}@keyframes scroll{to{transform:translate3d(-50%,0,0)}}.track2 span{padding:0 30px;font-size:16px;font-weight:700;color:#cbd1d8}.track2 .g{color:var(--gold2)}
+.boot{position:fixed;inset:0;z-index:1000;background:#020304;display:flex;align-items:center;justify-content:center;transition:opacity .8s;padding:20px}
+.boot.hide{opacity:0;pointer-events:none}
+.bootin{text-align:center;width:min(92vw,980px)}
+.boot-logo{display:block;width:min(86vw,920px);max-height:68vh;object-fit:contain;margin:0 auto 12px;filter:drop-shadow(0 0 18px rgba(212,175,55,.16))}
+.bootname{font:clamp(22px,3vw,38px) Georgia,serif;letter-spacing:clamp(3px,.7vw,8px);color:var(--gold2);text-shadow:0 0 12px rgba(212,175,55,.18)}
+.bootsub{font-size:clamp(10px,1.1vw,14px);letter-spacing:clamp(2px,.45vw,5px);color:#aab1ba;margin-top:10px}
+.bootline{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto 0;box-shadow:0 0 10px rgba(212,175,55,.45);animation:bootload 2.25s ease forwards}
+@keyframes bootload{to{width:min(72vw,420px)}}
+@media(max-width:900px){
+html,body{overflow:auto}
+.main{height:auto;min-height:100vh;flex-direction:column}
+.left{width:100%;min-width:0;height:auto;min-height:690px;border-right:0;border-bottom:1px solid var(--gold)}
+.media{width:100%;height:auto;aspect-ratio:16/9;min-height:0}
+.clocks{min-height:520px}
+.city{font-size:12px}.state{font-size:9.5px}.digital{font-size:20px}.ampm{font-size:11px}.date{font-size:11px}.count{font-size:10px}
+}
+@media(max-width:520px){
+.left{min-height:650px;padding:9px}
+.clocks{min-height:485px;gap:8px}
+.dial-wrap{width:122px;height:122px}
+.digital{font-size:19px}.date{font-size:10.5px}.count{font-size:9.5px}
+.track2 span{font-size:14px;padding:0 22px}
+}
+
+/* ROUND / SQUARE CLOCK TOGGLE */
+.dial-mode-dot{position:absolute;left:8px;top:8px;width:10px;height:10px;padding:0;border:1px solid rgba(242,215,121,.82);border-radius:50%;background:#69727e;cursor:pointer;z-index:90;box-shadow:0 0 0 2px rgba(0,0,0,.28)}
+body.square-dials .dial-wrap{border-radius:15px;padding:3px;background:conic-gradient(from -90deg,var(--gold) calc(var(--progress,0) * 1turn),#1b222d 0)}
+body.square-dials .progress-svg{display:none}
+body.square-dials .dial{inset:6px;border-radius:11px}
+
+
+/* === QUANTAGEN FINAL MEDIA FIT FIX === */
+@media (min-width:901px){
+  .media .layer{
+    object-fit:fill!important;
+    object-position:center center!important;
+    width:100.2%!important;
+    height:100.2%!important;
+    left:-0.1%!important;
+    top:-0.1%!important;
+  }
+}
+@media (max-width:900px){
+  .media{
+    aspect-ratio:16/9!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  .media .layer{
+    object-fit:fill!important;
+    object-position:center center!important;
+    width:100%!important;
+    height:100%!important;
+    left:0!important;
+    top:0!important;
+  }
+}
+
+
+/* === UNIVERSAL MEDIA FULL-SCREEN FIT — ONLY MEDIA LAYER OVERRIDE === */
+.media .layer{
+  object-fit:fill !important;
+  object-position:center center !important;
+  width:100% !important;
+  height:100% !important;
+  left:0 !important;
+  top:0 !important;
+}
+
+
+/* === TEXT SIZE SYNC: SK ENTERPRISES CLOCK LABEL SIZES === */
+.state{font-size:11px!important}
+.date{font-size:12px!important}
+.count{font-size:11.5px!important}
+@media(max-width:900px){.state{font-size:10px!important}.date{font-size:11px!important}.count{font-size:10.5px!important}}
+@media(max-width:430px){.state{font-size:9px!important}.date{font-size:10px!important}.count{font-size:9.5px!important}}
+
+
+
+
+
+/* ==============================================================
+   FINAL CLOCK FIX — BASED ON THE OLDER TV-WORKING IMPLEMENTATION
+   No clock redesign. Equal fixed pixel width/height on desktop/TV.
+   ============================================================== */
+@media (min-width:769px){
+  .dial-wrap{
+    width:132px!important;
+    height:132px!important;
+    min-width:132px!important;
+    min-height:132px!important;
+    max-width:132px!important;
+    max-height:132px!important;
+    flex:0 0 132px!important;
+    box-sizing:border-box!important;
+    margin:0 auto 3px!important;
+  }
+
+  .dial{
+    width:auto!important;
+    height:auto!important;
+    box-sizing:border-box!important;
+    backface-visibility:hidden!important;
+    -webkit-backface-visibility:hidden!important;
+  }
+
+  .progress-svg{
+    width:132px!important;
+    height:132px!important;
+    max-width:132px!important;
+    max-height:132px!important;
+  }
+
+  body.square-dials .dial-wrap{
+    width:132px!important;
+    height:132px!important;
+    min-width:132px!important;
+    min-height:132px!important;
+    max-width:132px!important;
+    max-height:132px!important;
+    flex-basis:132px!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Keep the original hand design, only reduce TV blur/glow. */
+  .hand{
+    filter:none!important;
+    backface-visibility:hidden!important;
+    -webkit-backface-visibility:hidden!important;
+  }
+  .hour{box-shadow:none!important}
+  .minute{box-shadow:none!important}
+  .second{box-shadow:0 0 2px rgba(212,175,55,.45)!important}
+}
+
+/* Mobile keeps the existing compact layout, but still uses equal dimensions. */
+@media (max-width:768px){
+  .dial-wrap{
+    width:122px!important;
+    height:122px!important;
+    min-width:122px!important;
+    min-height:122px!important;
+    max-width:122px!important;
+    max-height:122px!important;
+    box-sizing:border-box!important;
+  }
+  .progress-svg{width:122px!important;height:122px!important}
+  body.square-dials .dial-wrap{
+    width:122px!important;
+    height:122px!important;
+    min-width:122px!important;
+    min-height:122px!important;
+    max-width:122px!important;
+    max-height:122px!important;
+  }
+}
+
+/* Keep bottom gold divider/ticker visible. */
+.ticker{
+  position:relative!important;
+  z-index:100!important;
+  border-top:1px solid rgba(212,175,55,.70)!important;
+}
+
+</style>
+</head>
+<body>
+<div class="boot" id="boot"><div class="bootin">
+      <img class="boot-logo" src="./quantagen_startup_logo.png" alt="Quantagen International">
+      <div class="bootname">QUANTAGEN INTERNATIONAL</div>
+      <div class="bootsub">INITIALIZING GLOBAL DESK</div>
+      <div class="bootline"></div>
+    </div></div>
+<div class="main">
+<aside class="left">
+  <div class="brand"><div><b>QUANTAGEN</b><small>INTERNATIONAL</small></div></div>
+  <div class="clocks" id="clocks"></div>
+  <div class="footer"><div><small>QUANTITATIVE INTELLIGENCE</small><b>GLOBAL MARKETS DESK</b></div></div>
+</aside>
+<main class="media" id="media">
+  <img id="imgA" class="layer" alt=""><img id="imgB" class="layer" alt="">
+  <video id="video" class="layer" muted playsinline preload="auto"></video>
+
+  <div class="overlap" id="overlap">LONDON × NEW YORK • OVERLAP ACTIVE</div>
+  <div class="status desk-control" onclick="toggleDeskMenu(event)"><i class="live"></i><span>QUANTAGEN GLOBAL DESK</span><span class="chev">▾</span>
+    <div class="desk-menu" id="menu">
+      <button data-mode="IMAGES" onclick="chooseMode('IMAGES',event)">IMAGES</button>
+      <button data-mode="VIDEO" onclick="chooseMode('VIDEO',event)">VIDEO</button>
+      <button data-mode="MIXED" onclick="chooseMode('MIXED',event)">IMAGES + VIDEO</button>
+    </div>
+  </div>
+  <div class="alert" id="alert"><div class="alertbox"><b id="alertTitle"></b><span id="alertSub"></span></div></div>
+  <button class="full" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+</main>
+</div>
+<div class="ticker"><div class="track2" id="ticker"></div></div>
+
+<script>
+const CONFIG={
+  DEFAULT_MODE:"IMAGES",
+  VIDEO_FILE:"./quantagen_video.mp4",
+  IMAGES:["./img1.png","./img2.png","./img3.png","./img4.png","./img5.png","./img6.png"],
+  IMAGE_DURATION:9000
+};
+
+const ZONES=[
+ {id:"ind",city:"INDIA",tz:"Asia/Kolkata",session:null},
+ {id:"ny",city:"NEW YORK",tz:"America/New_York",session:{open:570,close:960}},
+ {id:"ldn",city:"LONDON",tz:"Europe/London",session:{open:480,close:990}},
+ {id:"tok",city:"TOKYO",tz:"Asia/Tokyo",session:{open:540,close:900}}
+];
+const prev={};let alertTimer,clockRAF;
+
+function zoneParts(date,tz){
+ const p=new Intl.DateTimeFormat("en-US",{timeZone:tz,year:"numeric",month:"2-digit",day:"2-digit",weekday:"short",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).formatToParts(date);
+ const g=t=>p.find(x=>x.type===t)?.value;let h=+g("hour");if(h===24)h=0;
+ return {weekday:g("weekday"),hour:h,minute:+g("minute"),second:+g("second")};
+}
+const weekend=w=>w==="Sat"||w==="Sun", pad=n=>String(n).padStart(2,"0");
+function remain(sec){sec=Math.max(0,Math.floor(sec));let d=Math.floor(sec/86400),h=Math.floor(sec%86400/3600),m=Math.floor(sec%3600/60);return d?`${d}D ${h}H ${pad(m)}M`:`${h}H ${pad(m)}M`}
+function toOpen(z,p){let cur=p.hour*60+p.minute+p.second/60,t=z.session.open;if(!weekend(p.weekday)&&cur<t)return(t-cur)*60;let di=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday),days=1;while([0,6].includes((di+days)%7))days++;return(1440-cur+(days-1)*1440+t)*60}
+function sess(z,p){
+ if(!z.session)return{open:false,progress:0,label:"HOME",count:"LOCAL REFERENCE"};
+ let cur=p.hour*60+p.minute+p.second/60,open=!weekend(p.weekday)&&cur>=z.session.open&&cur<z.session.close;
+ if(open)return{open:true,progress:(cur-z.session.open)/(z.session.close-z.session.open),label:"OPEN",count:`CLOSES IN ${remain((z.session.close-cur)*60)}`};
+ return{open:false,progress:0,label:"CLOSED",count:`OPENS IN ${remain(toOpen(z,p))}`};
+}
+function buildClocks(){
+ let root=document.getElementById("clocks");
+ ZONES.forEach(z=>{
+  let c=document.createElement("div");c.className="clock-card";c.id=z.id+"-card";
+  c.innerHTML=`<div class="card-top"><i class="dot"></i><span class="city">${z.city}</span><span class="state" id="${z.id}-state"></span></div>
+  <div class="dial-wrap"><svg class="progress-svg" viewBox="0 0 104 104"><circle class="track" cx="52" cy="52" r="48"/><circle class="progress" id="${z.id}-progress" cx="52" cy="52" r="48"/></svg>
+  <div class="dial" id="${z.id}-dial"><div class="hand hour" id="${z.id}-h"></div><div class="hand minute" id="${z.id}-m"></div><div class="hand second" id="${z.id}-s"></div><div class="pin"></div></div></div>
+  <div class="digital"><span id="${z.id}-time"></span><span class="ampm" id="${z.id}-ampm"></span></div><div class="date" id="${z.id}-date"></div><div class="count" id="${z.id}-count"></div>`;
+  if(z.id==="ind"){const toggle=document.createElement("button");toggle.className="dial-mode-dot";toggle.type="button";toggle.title="Round / square analog clocks";toggle.setAttribute("aria-label","Switch analog clock shape");toggle.addEventListener("click",(e)=>{e.stopPropagation();toggleDialShape()});c.appendChild(toggle)}
+  root.appendChild(c);
+  let dial=c.querySelector(".dial");
+  for(let i=0;i<60;i++){let mk=document.createElement("i");mk.className="marker"+(i%5===0?" major":"");mk.style.transform=`translate(-50%,-50%) rotate(${i*6}deg)`;dial.insertBefore(mk,dial.firstChild)}
+  for(let n=1;n<=12;n++){let a=n*30*Math.PI/180,x=50+39*Math.sin(a),y=50-39*Math.cos(a),el=document.createElement("span");el.className="num";el.textContent=n;el.style.left=x+"%";el.style.top=y+"%";dial.appendChild(el)}
+ });
+}
+
+function savedDialShape(){try{return localStorage.getItem("quantagenDialShape")||"round"}catch(e){return"round"}}
+function setDialShape(shape){document.body.classList.toggle("square-dials",shape==="square");try{localStorage.setItem("quantagenDialShape",shape)}catch(e){}}
+function toggleDialShape(){setDialShape(document.body.classList.contains("square-dials")?"round":"square")}
+
+function showAlert(t,s){let a=document.getElementById("alert");document.getElementById("alertTitle").textContent=t;document.getElementById("alertSub").textContent=s;a.classList.add("show");clearTimeout(alertTimer);alertTimer=setTimeout(()=>a.classList.remove("show"),4000)}
+function updateClockText(){
+ let now=new Date(),opens={};
+ ZONES.forEach(z=>{
+  let p=zoneParts(now,z.tz),st=sess(z,p);opens[z.id]=st.open;let h=p.hour%12||12;
+  document.getElementById(z.id+"-time").textContent=`${pad(h)}:${pad(p.minute)}:${pad(p.second)}`;
+  document.getElementById(z.id+"-ampm").textContent=p.hour>=12?" PM":" AM";
+  document.getElementById(z.id+"-date").textContent=new Intl.DateTimeFormat("en-US",{timeZone:z.tz,weekday:"short",month:"short",day:"numeric"}).format(now);
+  let se=document.getElementById(z.id+"-state");se.textContent=st.label;se.className="state "+(st.open?"open":"");
+  document.getElementById(z.id+"-count").textContent=st.count;
+  let card=document.getElementById(z.id+"-card");card.classList.toggle("active",st.open);
+  const prog=Math.max(0,Math.min(1,st.progress));
+   document.getElementById(z.id+"-progress").style.strokeDashoffset=301.6*(1-prog);
+   document.getElementById(z.id+"-dial").parentElement.style.setProperty("--progress",prog);
+  if(z.session&&prev[z.id]!==undefined&&prev[z.id]!==st.open){card.classList.remove("sweep");void card.offsetWidth;card.classList.add("sweep");showAlert(z.city,st.open?"SESSION ACTIVE":"SESSION CLOSED")}
+  prev[z.id]=st.open;
+ });
+ document.getElementById("overlap").classList.toggle("show",opens.ny&&opens.ldn);
+}
+// Smooth hands: requestAnimationFrame adds milliseconds to the seconds hand.
+function animateHands(){
+ let now=new Date(),ms=now.getMilliseconds();
+ ZONES.forEach(z=>{
+  let p=zoneParts(now,z.tz),smoothS=p.second+ms/1000,smoothM=p.minute+smoothS/60,smoothH=(p.hour%12)+smoothM/60;
+  document.getElementById(z.id+"-h").style.transform=`rotate(${smoothH*30}deg)`;
+  document.getElementById(z.id+"-m").style.transform=`rotate(${smoothM*6}deg)`;
+  document.getElementById(z.id+"-s").style.transform=`rotate(${smoothS*6}deg)`;
+ });
+ clockRAF=requestAnimationFrame(animateHands);
+}
+
+// MEDIA
+const A=document.getElementById("imgA"),B=document.getElementById("imgB"),V=document.getElementById("video");
+let active=A,standby=B,imgIndex=0,timer=null,currentMode="";
+function savedMode(){try{return localStorage.getItem("quantagenMediaMode")||CONFIG.DEFAULT_MODE}catch(e){return CONFIG.DEFAULT_MODE}}
+function saveMode(m){try{localStorage.setItem("quantagenMediaMode",m)}catch(e){}}
+function loadImg(el,src){return new Promise(r=>{el.onload=r;el.onerror=r;el.src=src})}
+async function swapImage(i){await loadImg(standby,CONFIG.IMAGES[i%CONFIG.IMAGES.length]);standby.classList.remove("show");void standby.offsetWidth;standby.classList.add("show");active.classList.remove("show");[active,standby]=[standby,active]}
+async function imagesMode(){
+ V.pause();V.classList.remove("show");imgIndex=0;await swapImage(0);
+ const next=async()=>{imgIndex=(imgIndex+1)%CONFIG.IMAGES.length;await swapImage(imgIndex);timer=setTimeout(next,CONFIG.IMAGE_DURATION)};timer=setTimeout(next,CONFIG.IMAGE_DURATION)
+}
+function videoMode(loop=true){A.classList.remove("show");B.classList.remove("show");V.src=CONFIG.VIDEO_FILE;V.loop=loop;V.muted=true;V.classList.add("show");V.play().catch(()=>{})}
+async function mixedMode(){
+ V.loop=false;
+ const cycle=async i=>{V.pause();V.classList.remove("show");await swapImage(i);if(i<CONFIG.IMAGES.length-1)timer=setTimeout(()=>cycle(i+1),CONFIG.IMAGE_DURATION);else timer=setTimeout(()=>{A.classList.remove("show");B.classList.remove("show");V.src=CONFIG.VIDEO_FILE;V.classList.add("show");V.play().catch(()=>cycle(0))},CONFIG.IMAGE_DURATION)};
+ V.onended=()=>cycle(0);cycle(0)
+}
+function setMode(m){
+ clearTimeout(timer);V.onended=null;V.pause();currentMode=m;saveMode(m);
+ 
+ document.querySelectorAll(".menu button").forEach(b=>b.classList.toggle("selected",b.dataset.mode===m));
+ document.getElementById("menu").classList.remove("show");
+ if(m==="VIDEO")videoMode(true);else if(m==="MIXED")mixedMode();else imagesMode()
+}
+function toggleDeskMenu(e){e.stopPropagation();document.getElementById("menu").classList.toggle("show")}
+function chooseMode(m,e){e.stopPropagation();setMode(m)}
+document.addEventListener("click",()=>document.getElementById("menu").classList.remove("show"));
+document.getElementById("media").addEventListener("click",(e)=>{
+ if(e.target.closest(".status,.desk-menu,.full"))return;
+ if(V.classList.contains("show")){if(V.paused)V.play().catch(()=>{});else V.pause()}
+});
+function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.()}
+
+function buildTicker(){
+ const x=['✦ WELCOME TO <span class="g">QUANTAGEN INTERNATIONAL</span> ✦','QUANTITATIVE INTELLIGENCE • SYSTEMATIC EXECUTION','✦ GLOBAL MARKETS DESK ✦','FOREX • COMMODITIES • GLOBAL MARKETS','RESEARCH • DATA ANALYSIS • EDGE VALIDATION • RISK MANAGEMENT'];
+ document.getElementById("ticker").innerHTML=[...x,...x].map(v=>`<span>${v}</span>`).join("")
+}
+window.addEventListener("load",()=>{
+ buildClocks();buildTicker();setDialShape(savedDialShape());updateClockText();setInterval(updateClockText,1000);animateHands();setMode(savedMode());
+ setTimeout(()=>{let b=document.getElementById("boot");b.classList.add("hide");setTimeout(()=>b.style.display="none",900)},2800)
+});
+</script>
+</body>
+</html>
