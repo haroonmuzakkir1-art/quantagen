@@ -58,7 +58,9 @@ body{display:flex;flex-direction:column}
 .marker{position:absolute;left:50%;top:50%;width:1px;height:44%;transform-origin:50% 0}.marker:after{content:"";display:block;width:1px;height:2.5px;background:#56616f}.marker.major:after{height:4.5px;background:#d4af37}
 .num{position:absolute;width:20px;height:20px;line-height:20px;text-align:center;font:700 10.5px Georgia,serif;color:#ecd788;transform:translate(-50%,-50%);z-index:2}
 
-/* PURE SOLID WHITE HANDS - ZERO BLACK SHADOW */
+/* =========================================================
+   TV GPU BLACK-HAND FIX: NO 3D TRANSFORMS, FORCED BORDERS 
+   ========================================================= */
 .hand{
   position:absolute;
   left:50%;
@@ -66,10 +68,8 @@ body{display:flex;flex-direction:column}
   transform-origin:50% 100% !important;
   -webkit-transform-origin:50% 100% !important;
   border-radius:2px;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
+  /* REMOVED: backface-visibility & will-change to stop TV black glitch */
   box-shadow:none !important;
-  border:none !important;
   filter:none !important;
   -webkit-filter:none !important;
 }
@@ -78,27 +78,24 @@ body{display:flex;flex-direction:column}
   height:24px !important;
   margin-left:-1.6px !important;
   background-color:#ffffff !important;
-  background:#ffffff !important;
+  border:1px solid #ffffff !important; /* Forces white on TVs that drop background */
   z-index:15 !important;
-  opacity:1 !important;
 }
 .minute{
   width:2.4px !important;
   height:37px !important;
   margin-left:-1.2px !important;
   background-color:#ffffff !important;
-  background:#ffffff !important;
+  border:1px solid #ffffff !important; /* Forces white on TVs that drop background */
   z-index:16 !important;
-  opacity:1 !important;
 }
 .second{
   width:1.2px !important;
   height:41px !important;
   margin-left:-0.6px !important;
   background-color:#ffdb4d !important;
-  background:#ffdb4d !important;
+  border:1px solid #ffdb4d !important;
   z-index:20 !important;
-  opacity:1 !important;
 }
 .pin{
   position:absolute;
@@ -108,10 +105,10 @@ body{display:flex;flex-direction:column}
   height:5.5px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background:#ffdb4d;
-  box-shadow:none;
-  border:none;
-  z-index:25;
+  background-color:#ffdb4d !important;
+  border:1px solid #ffdb4d !important;
+  box-shadow:none !important;
+  z-index:25 !important;
 }
 
 .digital{font-size:21px;font-weight:700;color:#fff;text-shadow:0 0 7px rgba(255,255,255,.18);white-space:nowrap}.ampm{font-size:12px;color:var(--gold2);margin-left:2px}.date{font-size:12px;color:#c7cdd5;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-top:1px}.count{height:17px;margin-top:2px;font-size:10.5px;color:#aab2bd;letter-spacing:.55px;text-transform:uppercase;white-space:nowrap}.active .count{color:#d8c47c}
@@ -228,15 +225,14 @@ body.square-dials .dial{inset:6px;border-radius:11px}
     color:#e5ce79!important;
   }
 
-  /* FORCED WHITE SOLID RENDERING ON TV */
+  /* FORCED WHITE SOLID RENDERING ON TV WITH BORDER FALLBACK */
   .hour{
     width:3.2px !important;
     height:25px !important;
     margin-left:-1.6px !important;
     background-color:#ffffff !important;
-    background:#ffffff !important;
+    border:1px solid #ffffff !important;
     box-shadow:none !important;
-    border:none !important;
     z-index:15 !important;
   }
   .minute{
@@ -244,9 +240,8 @@ body.square-dials .dial{inset:6px;border-radius:11px}
     height:37px !important;
     margin-left:-1.2px !important;
     background-color:#ffffff !important;
-    background:#ffffff !important;
+    border:1px solid #ffffff !important;
     box-shadow:none !important;
-    border:none !important;
     z-index:16 !important;
   }
   .second{
@@ -254,17 +249,16 @@ body.square-dials .dial{inset:6px;border-radius:11px}
     height:42px !important;
     margin-left:-0.6px !important;
     background-color:#ffdb4d !important;
-    background:#ffdb4d !important;
+    border:1px solid #ffdb4d !important;
     box-shadow:none !important;
-    border:none !important;
     z-index:20 !important;
   }
   .pin{
     width:5.5px !important;
     height:5.5px !important;
-    background:#ffdb4d !important;
+    background-color:#ffdb4d !important;
+    border:1px solid #ffdb4d !important;
     box-shadow:none !important;
-    border:none !important;
     z-index:25 !important;
   }
 
