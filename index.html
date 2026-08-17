@@ -22,7 +22,9 @@ body{display:flex;flex-direction:column}
 .card-top{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-bottom:3px}.dot{width:6px;height:6px;border-radius:50%;background:#68717d}.active .dot{background:var(--green);box-shadow:0 0 9px var(--green);animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.35}}
 .city{font-size:13px;letter-spacing:1.5px;font-weight:800;color:var(--gold2)}.state{font-size:10px;font-weight:800;color:#747d88}.state.open{color:var(--green)}
 
-/* DIAL & PROGRESS RING SYSTEM */
+/* =========================================================
+   NAZUK (DELICATE) DIAL & PROGRESS RING SYSTEM
+   ========================================================= */
 .dial-wrap{position:relative;width:132px;height:132px;margin:0 0 3px}
 .progress-svg{
   position:absolute;
@@ -35,31 +37,34 @@ body{display:flex;flex-direction:column}
 }
 .track{
   fill:none;
-  stroke:#1e2633;
-  stroke-width:2.5;
+  stroke:#151a22; /* Deeper elegant track */
+  stroke-width:1.5; /* Nazuk track width */
 }
 .progress{
   fill:none;
   stroke:#f2d779;
-  stroke-width:2.5;
+  stroke-width:1.8; /* Nazuk active progress width */
   stroke-linecap:round;
   stroke-dasharray:301.6;
   stroke-dashoffset:301.6;
+  filter:drop-shadow(0 0 2px rgba(242,215,121,.4));
   transition:stroke-dashoffset 0.8s linear;
 }
 .dial{
   position:absolute;
-  inset:5px;
+  inset:6px; /* Slightly more spacing for delicate look */
   border-radius:50%;
-  border:1px solid rgba(212,175,55,.25);
-  background:radial-gradient(circle at 50% 42%,#121822,#03060a 78%);
-  box-shadow:inset 0 0 15px rgba(0,0,0,.8),0 4px 12px rgba(0,0,0,.5);
+  border:1px solid rgba(212,175,55,.15); /* Sleek inner border */
+  background:radial-gradient(circle at 50% 40%,#0f141a,#020406 80%);
+  box-shadow:inset 0 0 12px rgba(0,0,0,1), 0 5px 15px rgba(0,0,0,.6);
 }
-.marker{position:absolute;left:50%;top:50%;width:1px;height:44%;transform-origin:50% 0}.marker:after{content:"";display:block;width:1px;height:2.5px;background:#56616f}.marker.major:after{height:4.5px;background:#d4af37}
-.num{position:absolute;width:20px;height:20px;line-height:20px;text-align:center;font:700 10.5px Georgia,serif;color:#ecd788;transform:translate(-50%,-50%);z-index:2}
+.marker{position:absolute;left:50%;top:50%;width:1px;height:45%;transform-origin:50% 0}
+.marker:after{content:"";display:block;width:1px;height:2px;background:#454d58}
+.marker.major:after{height:3.5px;background:#c2a145}
+.num{position:absolute;width:20px;height:20px;line-height:20px;text-align:center;font:500 10px Georgia,serif;color:#dcd098;transform:translate(-50%,-50%);z-index:2;opacity:0.85}
 
 /* =========================================================
-   TV GPU BLACK-HAND FIX: NO 3D TRANSFORMS, FORCED BORDERS 
+   MOBILE HANDS: NAZUK + PURE WHITE FIX 
    ========================================================= */
 .hand{
   position:absolute;
@@ -67,48 +72,46 @@ body{display:flex;flex-direction:column}
   bottom:50%;
   transform-origin:50% 100% !important;
   -webkit-transform-origin:50% 100% !important;
-  border-radius:2px;
-  /* REMOVED: backface-visibility & will-change to stop TV black glitch */
-  box-shadow:none !important;
+  border-radius:3px;
+  box-shadow:0 0 2px rgba(255,255,255,1) !important; /* Glow prevents gray rendering */
+  border:none !important;
   filter:none !important;
   -webkit-filter:none !important;
 }
 .hour{
-  width:3.2px !important;
-  height:24px !important;
-  margin-left:-1.6px !important;
-  background-color:#ffffff !important;
-  border:1px solid #ffffff !important; /* Forces white on TVs that drop background */
+  width:2.2px !important;
+  height:22px !important;
+  margin-left:-1.1px !important;
+  background:#ffffff !important;
   z-index:15 !important;
 }
 .minute{
-  width:2.4px !important;
-  height:37px !important;
-  margin-left:-1.2px !important;
-  background-color:#ffffff !important;
-  border:1px solid #ffffff !important; /* Forces white on TVs that drop background */
+  width:1.5px !important;
+  height:35px !important;
+  margin-left:-0.75px !important;
+  background:#ffffff !important;
   z-index:16 !important;
 }
 .second{
-  width:1.2px !important;
-  height:41px !important;
-  margin-left:-0.6px !important;
-  background-color:#ffdb4d !important;
-  border:1px solid #ffdb4d !important;
+  width:1px !important;
+  height:40px !important;
+  margin-left:-0.5px !important;
+  background:#ffdb4d !important;
+  box-shadow:0 0 2px rgba(255,219,77,0.8) !important;
   z-index:20 !important;
 }
 .pin{
   position:absolute;
   left:50%;
   top:50%;
-  width:5.5px;
-  height:5.5px;
+  width:4.5px;
+  height:4.5px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background-color:#ffdb4d !important;
-  border:1px solid #ffdb4d !important;
-  box-shadow:none !important;
-  z-index:25 !important;
+  background:#ffffff;
+  border:1px solid #d4af37; /* Premium gold border with white center */
+  box-shadow:0 0 3px #d4af37;
+  z-index:25;
 }
 
 .digital{font-size:21px;font-weight:700;color:#fff;text-shadow:0 0 7px rgba(255,255,255,.18);white-space:nowrap}.ampm{font-size:12px;color:var(--gold2);margin-left:2px}.date{font-size:12px;color:#c7cdd5;text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-top:1px}.count{height:17px;margin-top:2px;font-size:10.5px;color:#aab2bd;letter-spacing:.55px;text-transform:uppercase;white-space:nowrap}.active .count{color:#d8c47c}
@@ -166,7 +169,9 @@ body.square-dials .dial{inset:6px;border-radius:11px}
 @media(max-width:900px){.state{font-size:10px!important}.date{font-size:11px!important}.count{font-size:10.5px!important}}
 @media(max-width:430px){.state{font-size:9px!important}.date{font-size:10px!important}.count{font-size:9.5px!important}}
 
-/* TV SCREEN SPECIFIC LAYOUT */
+/* =========================================================
+   TV SCREEN SPECIFIC OVERRIDES (NAZUK + PURE WHITE)
+   ========================================================= */
 @media (min-width:901px) and (orientation:landscape){
   .left{padding:10px!important;gap:7px!important}
   .brand{min-height:52px!important;height:52px!important;flex:0 0 52px!important}
@@ -188,6 +193,7 @@ body.square-dials .dial{inset:6px;border-radius:11px}
   .card-top{grid-row:1!important;height:18px!important;min-height:18px!important;margin:0!important;white-space:nowrap!important}
   .city{font-size:12px!important;line-height:18px!important}
   .state{display:inline!important;font-size:9.5px!important;line-height:18px!important}
+  
   .dial-wrap,
   body.square-dials .dial-wrap{
     grid-row:2!important;
@@ -210,55 +216,56 @@ body.square-dials .dial{inset:6px;border-radius:11px}
     max-height:104px!important;
     filter:none!important;
   }
-  .track{stroke-width:2.5px!important;stroke:#1c232e!important}
-  .progress{stroke-width:2.5px!important;stroke:#f2d779!important;filter:none!important}
+  .track{stroke-width:1.5px!important;stroke:#151a22!important}
+  .progress{stroke-width:1.8px!important;stroke:#f2d779!important;filter:none!important}
   
   .dial{
-    inset:4px!important;
-    border:1px solid rgba(212,175,55,.2)!important;
-    box-shadow:inset 0 0 10px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.4)!important;
+    inset:5px!important;
+    border:1px solid rgba(212,175,55,.18)!important;
+    box-shadow:inset 0 0 10px rgba(0,0,0,.8), 0 3px 8px rgba(0,0,0,.5)!important;
   }
   .num{
-    font-weight:700!important;
-    font-size:10.5px!important;
+    font-weight:600!important;
+    font-size:10px!important;
     text-shadow:none!important;
-    color:#e5ce79!important;
+    color:#dcd098!important;
+    opacity:0.9!important;
   }
 
-  /* FORCED WHITE SOLID RENDERING ON TV WITH BORDER FALLBACK */
+  /* TV SPECIFIC - DOUBLE WHITE GLOW TO PREVENT GRAY ANTI-ALIASING */
   .hour{
-    width:3.2px !important;
+    width:2.5px !important;
     height:25px !important;
-    margin-left:-1.6px !important;
-    background-color:#ffffff !important;
-    border:1px solid #ffffff !important;
-    box-shadow:none !important;
+    margin-left:-1.25px !important;
+    background:#ffffff !important;
+    box-shadow:0 0 1.5px #ffffff, 0 0 1px #ffffff !important; /* Forces pure white blooming */
+    border:none !important;
     z-index:15 !important;
   }
   .minute{
-    width:2.4px !important;
-    height:37px !important;
-    margin-left:-1.2px !important;
-    background-color:#ffffff !important;
-    border:1px solid #ffffff !important;
-    box-shadow:none !important;
+    width:1.8px !important;
+    height:38px !important;
+    margin-left:-0.9px !important;
+    background:#ffffff !important;
+    box-shadow:0 0 1.5px #ffffff, 0 0 1px #ffffff !important; /* Forces pure white blooming */
+    border:none !important;
     z-index:16 !important;
   }
   .second{
-    width:1.2px !important;
-    height:42px !important;
-    margin-left:-0.6px !important;
-    background-color:#ffdb4d !important;
-    border:1px solid #ffdb4d !important;
-    box-shadow:none !important;
+    width:1px !important;
+    height:43px !important;
+    margin-left:-0.5px !important;
+    background:#ffdb4d !important;
+    box-shadow:0 0 1.5px #ffdb4d !important;
+    border:none !important;
     z-index:20 !important;
   }
   .pin{
-    width:5.5px !important;
-    height:5.5px !important;
-    background-color:#ffdb4d !important;
-    border:1px solid #ffdb4d !important;
-    box-shadow:none !important;
+    width:5px !important;
+    height:5px !important;
+    background:#ffffff !important;
+    border:1.2px solid #d4af37 !important;
+    box-shadow:0 0 4px rgba(212,175,55,0.9) !important;
     z-index:25 !important;
   }
 
@@ -283,9 +290,9 @@ body.square-dials .dial{inset:6px;border-radius:11px}
     max-width:88px!important;
     max-height:88px!important;
   }
-  .hour{height:20px!important;width:2.8px!important;margin-left:-1.4px!important}
-  .minute{height:30px!important;width:2px!important;margin-left:-1px!important}
-  .second{height:35px!important}
+  .hour{height:20px!important;width:2.2px!important;margin-left:-1.1px!important}
+  .minute{height:32px!important;width:1.5px!important;margin-left:-0.75px!important}
+  .second{height:37px!important}
   .digital{height:21px!important;line-height:21px!important;font-size:16px!important}
   .date,.count{height:13px!important;line-height:13px!important}
 }
